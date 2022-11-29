@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.SplashFragment">
+
+        <ImageView
+            android:id="@+id/logo_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.4" />
+
+        <TextView
+            android:id="@+id/name_s1_tv"
+            style="@style/Widget.App.TextView.b20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:alpha="0"
+            android:text="Redd"
+            app:layout_constraintEnd_toEndOf="@+id/logo_iv"
+            app:layout_constraintEnd_toStartOf="@+id/name_s2_tv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo_iv" />
+
+        <TextView
+            android:id="@+id/name_s2_tv"
+            style="@style/Widget.App.TextView.b20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:alpha="0"
+            android:text="i"
+            android:textColor="@color/orange"
+            app:layout_constraintBottom_toBottomOf="@+id/name_s1_tv"
+            app:layout_constraintEnd_toStartOf="@+id/name_s3_tv"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/name_s1_tv"
+            app:layout_constraintTop_toBottomOf="@+id/logo_iv" />
+
+        <TextView
+            android:id="@+id/name_s3_tv"
+            style="@style/Widget.App.TextView.b20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:alpha="0"
+            android:text="t"
+            app:layout_constraintBottom_toBottomOf="@+id/name_s2_tv"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/name_s2_tv"
+            app:layout_constraintTop_toBottomOf="@+id/logo_iv"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/slogan_tv"
+            style="@style/Widget.App.TextView.r10"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/global_margin"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/global_margin"
+            android:alpha="0"
+            android:text="@string/i_read_it_on_reddit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name_s1_tv" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
