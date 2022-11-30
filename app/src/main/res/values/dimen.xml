@@ -2,5 +2,5 @@
 <resources>
     <dimen name="global_margin">@dimen/_24sdp</dimen>
     <dimen name="button_height">@dimen/_56sdp</dimen>
-    <dimen name="global_radius">@dimen/_10sdp</dimen>
+    <dimen name="global_radius">@dimen/_5sdp</dimen>
 </resources>

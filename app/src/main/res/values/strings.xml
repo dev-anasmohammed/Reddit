@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Reddit</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Splash Fragment -->
+    <string name="redd">Redd</string>
+    <string name="i">i</string>
+    <string name="t">t</string>
     <string name="i_read_it_on_reddit">I READ IT ON REDDIT</string>
+
+    <!-- Articles Fragment -->
+    <string name="kotlin_news">Kotlin News</string>
 </resources>

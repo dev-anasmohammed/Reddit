@@ -1,7 +1,8 @@
-package com.devanasmohammed.reddit
+package com.devanasmohammed.reddit.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.devanasmohammed.reddit.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

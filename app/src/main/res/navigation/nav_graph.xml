@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/articlesFragment"
-        android:name="com.devanasmohammed.reddit.presentation.ArticlesFragment"
+        android:name="com.devanasmohammed.reddit.presentation.articles.ArticlesFragment"
         android:label="fragment_articles"
         tools:layout="@layout/fragment_articles" />
 </navigation>
