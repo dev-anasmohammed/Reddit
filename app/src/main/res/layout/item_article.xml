@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_24sdp"
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:background="@drawable/bg_item_article"
+        app:cardCornerRadius="@dimen/global_radius"
+        app:cardElevation="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_item_article"
+            app:layout_goneMarginEnd="@dimen/_24sdp">
+
+            <ImageView
+                android:id="@+id/thumbnail_iv"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_200sdp"
+                android:contentDescription="@null"
+                android:scaleType="centerCrop"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/linear_v"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/_80sdp"
+                android:background="@drawable/ic_linear"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/author_tv"
+                style="@style/Widget.App.TextView.r10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textAlignment="viewStart"
+                android:textColor="@color/orange_500"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/thumbnail_iv"
+                app:layout_constraintStart_toStartOf="@+id/title_tv"
+                tools:text="MattyAlan" />
+
+            <TextView
+                android:id="@+id/published_since_tv"
+                style="@style/Widget.App.TextView.r10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_16sdp"
+                android:textColor="@color/orange_200"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/title_tv"
+                tools:text="11 Days ago" />
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_16sdp"
+                app:layout_constraintBottom_toTopOf="@id/title_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/title_tv"
+                style="@style/Widget.App.TextView.m14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_16sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
+                android:ellipsize="end"
+                android:maxLines="4"
+                android:textAlignment="viewStart"
+                app:layout_constraintBottom_toTopOf="@+id/author_tv"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Flow B depends on Flow A. Flow A emits multiple values and only one of them should trigger Flow B. How do I do this? Docs talk about flatMap but I honestly don't understand" />
+
+            <ImageView
+                android:id="@+id/published_icon_iv"
+                android:layout_width="@dimen/_13sdp"
+                android:layout_height="@dimen/_13sdp"
+                android:layout_marginEnd="@dimen/_4sdp"
+                android:contentDescription="@null"
+                app:layout_constraintBottom_toBottomOf="@+id/published_since_tv"
+                app:layout_constraintEnd_toStartOf="@+id/published_since_tv"
+                app:layout_constraintTop_toTopOf="@+id/published_since_tv"
+                app:srcCompat="@drawable/ic_time_orange" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+</layout>
