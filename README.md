@@ -1,9 +1,9 @@
 #Reddit Clone App
-==================
+
 Fetch articles about Kotlin and display it in recyclerView.
 
 # Built With 🛠 
-==================
+
 *  [Kotlin](https://kotlinlang.org/) 
 *  [Coroutines](https://developer.android.com/kotlin/coroutines)
 *  [LiveData](https://developer.android.com/topic/libraries/architecture/livedata/) 
