@@ -1,4 +1,4 @@
-#Reddit Clone App
+# Reddit Clone App
 
 Fetch articles about Kotlin and display it in recyclerView.
 
