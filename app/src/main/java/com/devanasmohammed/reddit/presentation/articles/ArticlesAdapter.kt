@@ -61,21 +61,46 @@ class ArticlesAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_article, parent, false)
         )
-
     }
 
     override fun onBindViewHolder(holder: ArticlesViewHolder, position: Int) {
         val article = differ.currentList[position]
+
+        if(article.thumbnailUrl!=""){
+            handleIfImage(holder, article.thumbnailUrl.toString(), holder.thumbnail)
+        }else{
+            handleNotImage(holder)
+        }
+
         holder.apply {
             //set data to views
             title.text = article.title
             author.text = article.author
             publishedSince.text = article.publishedSince
 
-            if (article.thumbnailUrl != "") {
-                handleIfImage(holder, article.thumbnailUrl.toString(), thumbnail)
+            itemView.setOnClickListener {
+                onItemClickListener?.let {
+                    it(article)
+                }
             }
         }
+    }
+
+    private fun handleNotImage(holder: ArticlesViewHolder) {
+
+        holder.apply {
+            title.setTextColor(
+                ResourcesCompat.getColor(context.resources, R.color.black, null))
+            author.setTextColor(
+                ResourcesCompat.getColor(context.resources, R.color.orange_500, null))
+            publishedSince.setTextColor(
+                ResourcesCompat.getColor(context.resources, R.color.orange_200, null))
+            publishedIcon.setImageResource(R.drawable.ic_time_orange)
+
+            thumbnail.visibility = View.GONE
+            linear.visibility = View.GONE
+        }
+
     }
 
 
@@ -93,7 +118,14 @@ class ArticlesAdapter(
             thumbnail.visibility = View.VISIBLE
             linear.visibility = View.VISIBLE
         }
+
         setupGlide(url, thumbnail)
+    }
+
+    private var onItemClickListener: ((Article) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (Article) -> Unit) {
+        onItemClickListener = listener
     }
 
     private fun setupGlide(url: String, thumbnail: ImageView) {

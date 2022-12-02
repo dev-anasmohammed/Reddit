@@ -22,10 +22,32 @@ class HandleJsonResponse {
                 //get article all data
                 val articleData = article.getJSONObject("data")
                 val title = articleData.getString("title")
-                val content = articleData.getString("selftext")
                 val author = articleData.getString("author")
                 val publishedDate = articleData.getLong("created")
                 val sourceUrl = articleData.getString("url")
+                //get content
+                var content = ""
+                try{
+                    if(articleData.has("selftext")){
+                        content = articleData.getString("selftext")
+                    }
+                }catch (e:Exception){
+                    Log.e(tag,"catch error in parseArticleFromJson with content :${e.message}")
+                }
+                finally {
+                    if(content==""){
+                        if(articleData.has("crosspost_parent_list")){
+                            val crossPostList = articleData.getJSONArray("crosspost_parent_list")
+                            for(index in 0 until crossPostList.length()){
+                                if(index==0){
+                                    val post = crossPostList.getJSONObject(0)
+                                    content = post.getString("selftext")
+                                }
+                            }
+                        }
+                    }
+
+                }
                 //get article media
                 val media = articleData.getString("secure_media")
                 var thumbnailUrl = ""

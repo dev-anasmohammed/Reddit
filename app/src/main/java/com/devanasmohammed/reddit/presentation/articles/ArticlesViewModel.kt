@@ -1,21 +1,26 @@
 package com.devanasmohammed.reddit.presentation.articles
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.devanasmohammed.reddit.data.model.Article
 import com.devanasmohammed.reddit.data.model.Result
-import com.devanasmohammed.reddit.util.HandleJsonResponse
 import com.devanasmohammed.reddit.data.remote.repositories.ArticlesRepo
+import com.devanasmohammed.reddit.util.HandleJsonResponse
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
 
 class ArticlesViewModel(private val articlesRepo: ArticlesRepo) : ViewModel() {
 
+    private val tag = "ArticlesViewModel"
+
     private val _articles = MutableLiveData<Result<List<Article>>>()
-    val article: LiveData<Result<List<Article>>> get() = _articles
+    val articles: LiveData<Result<List<Article>>> get() = _articles
 
     init {
         getRemoteArticles()
@@ -35,14 +40,48 @@ class ArticlesViewModel(private val articlesRepo: ArticlesRepo) : ViewModel() {
 
     private fun handleGetArticlesResponse(response: Response<String>): Result<List<Article>> {
         if (response.isSuccessful) {
-            val listOfArticles =
-                HandleJsonResponse().parseArticleFromJson(JSONObject(response.body().toString()))
-            return if(listOfArticles!=null){
-                Result.Success(listOfArticles)
-            }else{
-                Result.Error("Failed to get Articles")
+            try {
+                val listOfArticles =
+                    HandleJsonResponse().parseArticleFromJson(
+                        JSONObject(
+                            response.body().toString()
+                        )
+                    )
+                if (listOfArticles != null) {
+                    //cache articles
+                    viewModelScope.launch {
+                        val delete = async {
+                            articlesRepo.deleteArticles()
+                        }
+                        val caching = async {
+                            articlesRepo.saveArticles(listOfArticles.toList())
+                        }
+                        delete.await()
+                        caching.await()
+                    }
+                    return Result.Success(listOfArticles)
+                } else {
+                    return Result.Error("Failed to get Articles")
+                }
+
+            } catch (e: Exception) {
+                Log.e(tag, "Catch error in handleGetArticlesResponse: ${e.message}")
+                return Result.Error("Failed to get Articles")
             }
         }
         return Result.Error("Failed to get Articles")
     }
+
+    fun getLocalArticles() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _articles.postValue(Result.Loading())
+            val response = articlesRepo.getLocalArticles()
+            if (response != null) {
+                _articles.postValue(Result.Success(response))
+            } else {
+                _articles.postValue(Result.Error("No articles to load"))
+            }
+        }
+    }
+
 }

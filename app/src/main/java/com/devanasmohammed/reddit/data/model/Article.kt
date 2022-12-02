@@ -1,6 +1,12 @@
 package com.devanasmohammed.reddit.data.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.io.Serializable
+
+@Entity
 data class Article(
+    @PrimaryKey(autoGenerate = true)
     val id : Int? = null ,
     val title : String? = null,
     val content:String?= null,
@@ -8,4 +14,4 @@ data class Article(
     val publishedSince: String?= null,
     val sourceUrl : String? = null,
     val thumbnailUrl :String? = null
-)
+) : Serializable

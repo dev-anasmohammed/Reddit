@@ -7,12 +7,16 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.devanasmohammed.reddit.R
+import com.devanasmohammed.reddit.data.local.LocalDatabase
 import com.devanasmohammed.reddit.data.model.Result
 import com.devanasmohammed.reddit.data.remote.repositories.ArticlesRepo
 import com.devanasmohammed.reddit.databinding.FragmentArticlesBinding
+import com.devanasmohammed.reddit.util.ProgressBarHandler
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class ArticlesFragment : Fragment() {
 
@@ -21,7 +25,7 @@ class ArticlesFragment : Fragment() {
 
     private lateinit var viewModel: ArticlesViewModel
     private lateinit var adapter: ArticlesAdapter
-
+    private lateinit var progressBar: ProgressBarHandler
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,16 +41,40 @@ class ArticlesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        progressBar = ProgressBarHandler(requireActivity(), binding.root.id)
         setupViewModel()
         setupRecyclerView()
-        viewModel.article.observe(viewLifecycleOwner) { result ->
+
+        viewModel.articles.observe(viewLifecycleOwner) { result ->
             when (result) {
+                is Result.Loading -> {
+                    progressBar.show()
+                }
                 is Result.Success -> {
+                    progressBar.hide()
                     adapter.submitList(result.data?.toList()!!)
                 }
-                is Result.Loading -> {}
-                is Result.Error -> {}
+                is Result.Error -> {
+                    progressBar.hide()
+                    MaterialAlertDialogBuilder(requireContext())
+                        .setMessage(result.message.toString())
+                        .setPositiveButton("Ok", null)
+                        .setNegativeButton("Offline Mode") { _, _ ->
+                            viewModel.getLocalArticles()
+                        }
+                        .show()
+                }
             }
+        }
+
+        adapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("article", it)
+            }
+            findNavController().navigate(
+                R.id.action_articlesFragment_to_articleFragment,
+                bundle
+            )
         }
     }
 
@@ -56,7 +84,7 @@ class ArticlesFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        val factory = ArticlesViewModelFactory(ArticlesRepo())
+        val factory = ArticlesViewModelFactory(ArticlesRepo(LocalDatabase.getDatabase(requireContext())))
         viewModel = ViewModelProvider(this, factory)[ArticlesViewModel::class.java]
     }
 

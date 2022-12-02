@@ -9,4 +9,6 @@
 
     <!-- Articles Fragment -->
     <string name="kotlin_news">Kotlin News</string>
+    <string name="continue_reading">Continue reading:</string>
+    <string name="video_source">Video Source:</string>
 </resources>

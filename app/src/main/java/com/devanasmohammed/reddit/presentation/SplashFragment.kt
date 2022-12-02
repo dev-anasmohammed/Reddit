@@ -49,7 +49,7 @@ class SplashFragment : Fragment() {
     }
 
     private fun leftToRightAnimationWithAlpha(view: View ){
-        view.animate().alpha(1f).duration = 700
+        view.animate().alpha(1f).duration = 600
         view.startAnimation(
             AnimationUtils.loadAnimation(
                 requireContext(),
@@ -61,10 +61,10 @@ class SplashFragment : Fragment() {
     private suspend fun appNameAndSloganAnimations(){
         //redd animation
         leftToRightAnimationWithAlpha(binding.nameS1Tv)
-        delay(1000)
+        delay(500)
         //i animation
         leftToRightAnimationWithAlpha(binding.nameS2Tv)
-        delay(700)
+        delay(300)
         //t animation
         leftToRightAnimationWithAlpha(binding.nameS3Tv)
         delay(500)
