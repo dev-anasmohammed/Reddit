@@ -10,7 +10,6 @@ import com.devanasmohammed.reddit.data.model.Result
 import com.devanasmohammed.reddit.data.remote.repositories.ArticlesRepo
 import com.devanasmohammed.reddit.util.HandleJsonResponse
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import retrofit2.Response
@@ -41,35 +40,28 @@ class ArticlesViewModel(private val articlesRepo: ArticlesRepo) : ViewModel() {
     private fun handleGetArticlesResponse(response: Response<String>): Result<List<Article>> {
         if (response.isSuccessful) {
             try {
-                val listOfArticles =
-                    HandleJsonResponse().parseArticleFromJson(
-                        JSONObject(
-                            response.body().toString()
-                        )
-                    )
+                val listOfArticles = HandleJsonResponse().parseArticlesFromJson(
+                    JSONObject(response.body().toString())
+                )
                 if (listOfArticles != null) {
-                    //cache articles
                     viewModelScope.launch {
-                        val delete = async {
-                            articlesRepo.deleteArticles()
-                        }
-                        val caching = async {
-                            articlesRepo.saveArticles(listOfArticles.toList())
-                        }
-                        delete.await()
-                        caching.await()
+                        saveArticlesLocally(listOfArticles.toList())
                     }
-                    return Result.Success(listOfArticles)
+                    return Result.Success(listOfArticles.toList())
                 } else {
                     return Result.Error("Failed to get Articles")
                 }
-
             } catch (e: Exception) {
                 Log.e(tag, "Catch error in handleGetArticlesResponse: ${e.message}")
                 return Result.Error("Failed to get Articles")
             }
         }
         return Result.Error("Failed to get Articles")
+    }
+
+    private suspend fun saveArticlesLocally(listOfArticles: List<Article>) {
+        articlesRepo.deleteArticles()
+        articlesRepo.saveArticles(listOfArticles.toList())
     }
 
     fun getLocalArticles() {

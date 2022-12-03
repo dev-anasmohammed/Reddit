@@ -6,8 +6,8 @@ import java.io.Serializable
 
 @Entity
 data class Article(
-    @PrimaryKey(autoGenerate = true)
-    val id : Int? = null ,
+    @PrimaryKey(autoGenerate = false)
+    val id : String  ,
     val title : String? = null,
     val content:String?= null,
     val author : String? = null,

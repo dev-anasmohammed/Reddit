@@ -1,7 +1,6 @@
 package com.devanasmohammed.reddit.data.remote.repositories
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import com.devanasmohammed.reddit.data.local.LocalDatabase
 import com.devanasmohammed.reddit.data.model.Article
 import com.devanasmohammed.reddit.data.remote.api.RetrofitInstance

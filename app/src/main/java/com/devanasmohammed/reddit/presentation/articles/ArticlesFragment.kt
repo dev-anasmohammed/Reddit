@@ -1,12 +1,14 @@
 package com.devanasmohammed.reddit.presentation.articles
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.devanasmohammed.reddit.data.remote.repositories.ArticlesRepo
 import com.devanasmohammed.reddit.databinding.FragmentArticlesBinding
 import com.devanasmohammed.reddit.util.ProgressBarHandler
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class ArticlesFragment : Fragment() {
 
@@ -84,7 +87,8 @@ class ArticlesFragment : Fragment() {
     }
 
     private fun setupViewModel() {
-        val factory = ArticlesViewModelFactory(ArticlesRepo(LocalDatabase.getDatabase(requireContext())))
+        val factory =
+            ArticlesViewModelFactory(ArticlesRepo(LocalDatabase.getDatabase(requireContext())))
         viewModel = ViewModelProvider(this, factory)[ArticlesViewModel::class.java]
     }
 

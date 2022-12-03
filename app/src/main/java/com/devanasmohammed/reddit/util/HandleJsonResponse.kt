@@ -11,16 +11,19 @@ class HandleJsonResponse {
 
     private val tag = "HandleJsonResponse"
 
-    fun parseArticleFromJson(jsonResponse: JSONObject): List<Article>? {
+    fun parseArticlesFromJson(jsonResponse: JSONObject): List<Article>? {
         try {
             val data = jsonResponse.getJSONObject("data")
             val children = data.getJSONArray("children")
+
             val articlesList = ArrayList<Article>()
+
             for (i in 0 until children.length()) {
                 //get article
                 val article = children.getJSONObject(i)
                 //get article all data
                 val articleData = article.getJSONObject("data")
+                val id = articleData.getString("id")
                 val title = articleData.getString("title")
                 val author = articleData.getString("author")
                 val publishedDate = articleData.getLong("created")
@@ -66,7 +69,7 @@ class HandleJsonResponse {
 
                 articlesList.add(
                     Article(
-                        0,
+                        id,
                         title,
                         content,
                         author,

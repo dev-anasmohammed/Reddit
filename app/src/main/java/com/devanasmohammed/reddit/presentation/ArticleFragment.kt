@@ -3,6 +3,7 @@ package com.devanasmohammed.reddit.presentation
 import android.graphics.Paint
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import com.devanasmohammed.reddit.R
 import com.devanasmohammed.reddit.data.model.Article
 import com.devanasmohammed.reddit.databinding.FragmentArticleBinding
 import com.devanasmohammed.reddit.util.ProgressBarHandler
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import io.noties.markwon.Markwon
@@ -84,6 +86,8 @@ class ArticleFragment : Fragment() {
     }
 
     private fun setupVideoView(url: String) {
+        progressBar.hide()
+
         binding.sourceTv.text = resources.getString(R.string.video_source)
         //hide content textView
         binding.contentTv.visibility = View.GONE
@@ -92,8 +96,8 @@ class ArticleFragment : Fragment() {
         binding.youtubeVideoPlayer.addYouTubePlayerListener(object :
             AbstractYouTubePlayerListener() {
             override fun onReady(youTubePlayer: YouTubePlayer) {
-                progressBar.hide()
                 val videoId = getYoutubeVideoId(url)
+                Log.e("/*/*/","onReady")
                 youTubePlayer.cueVideo(videoId, 0f)
             }
         })
